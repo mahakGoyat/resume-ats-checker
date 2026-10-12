@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Resume ATS Score Checker"
+description = "A privacy-first web tool that analyzes PDF and DOCX resumes for applicant tracking system compatibility, compares them with an optional job description, and explains how to improve the score."
+version = "1.0.0"
+id = "artifacts/resume-ats-score-checker"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21218
+
+[services.development]
+run = "pnpm --filter @workspace/resume-ats-score-checker run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/resume-ats-score-checker", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/resume-ats-score-checker/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21218"
+BASE_PATH = "/"

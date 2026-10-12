@@ -1,0 +1,1 @@
+- [Resume analysis privacy](resume-analysis-privacy.md) — keep resume parsing client-side so uploaded documents are never sent to or stored by the app.

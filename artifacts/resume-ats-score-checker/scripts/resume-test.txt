@@ -1,0 +1,29 @@
+Aarav Sharma
+Senior Software Engineer
++1 (555) 010-2233 | aarav.sharma@example.com | San Francisco, CA | linkedin.com/in/aaravsharma | github.com/aaravsharma
+
+SUMMARY
+Experienced software engineer with 8 years of experience designing and shipping reliable, scalable web applications. Strong background in distributed systems, developer tooling, and cross-functional leadership with a focus on measurable business impact. Recognized for turning ambiguous requirements into simple, well-tested systems that teams enjoy maintaining.
+
+TECHNICAL & PROFESSIONAL SKILLS
+Languages: JavaScript, TypeScript, Python, Go, SQL
+Frameworks & Libraries: React, Next.js, Node.js, Express, Tailwind CSS
+Infrastructure & Tools: AWS (EC2, S3, Lambda, RDS), Docker, Kubernetes, PostgreSQL, Redis, GitHub Actions, Datadog
+
+PROJECTS
+Unify - Internal Developer Platform    2024 - 2026
+- Led the redesign of an internal developer portal used by 200+ engineers
+- Built a reusable React component library and design system, cutting front-end work by 35%
+- Added self-serve CI/CD pipelines with GitHub Actions, reducing deploy time from 40 minutes to 8
+- Implemented OpenTelemetry tracing to cut mean time to detection by 50%
+- Mentored 4 junior engineers through quarterly pairing sessions
+
+Budgetly - Personal Finance Tracker    2023 - 2024
+- Shipped a full-stack money tracking app with React, Firebase, and Stripe billing
+- Integrated Plaid bank sync used by 12,000+ active users
+- Automated weekly budget digest emails with SendGrid, lifting weekly retention by 12%
+
+EDUCATION & CERTIFICATIONS
+B.S. Computer Science, University of California, Berkeley    2017 - 2021
+AWS Certified Solutions Architect - Associate    2022
+Google Cloud Professional Developer    2023

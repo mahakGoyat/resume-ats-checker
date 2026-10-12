@@ -1,0 +1,291 @@
+35
+Poor
+Average Score
+Workday
+Taleo
+SuccessFactors
+iCIMS
+Greenhouse
+Lever
+0/6
+Systems Passed
+General Readiness
+add JD
+Card View
+Detailed View
+Share
+Export PDF
+
+Workday
+Workday, Inc.
+
+50
+May Be Filtered
+Needs Work
+Formatting
+92.8
+Keywords
+100
+Sections
+25
+Experience
+0
+Education
+80
+Hide details
+Workday may filter this resume. Weakest areas: Experience (0), Sections (25).
+
+Formatting issues
+images or graphics detected
+Sections
+Present:
+education
+Missing:
+contact
+experience
+skills
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+
+Taleo
+Oracle Corporation
+
+39
+May Be Filtered
+Poor
+Formatting
+93.2
+Keywords
+100
+Sections
+25
+Experience
+0
+Education
+80
+Hide details
+Taleo may filter this resume. Weakest areas: Experience (0), Sections (25).
+
+Formatting issues
+images or graphics detected
+Sections
+Present:
+education
+Missing:
+contact
+experience
+skills
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+
+SuccessFactors
+SAP SE
+
+25
+May Be Filtered
+Poor
+Formatting
+93.2
+Keywords
+100
+Sections
+25
+Experience
+0
+Education
+80
+Hide details
+SuccessFactors may filter this resume. Weakest areas: Experience (0), Sections (25).
+
+Formatting issues
+images or graphics detected
+Sections
+Present:
+education
+Missing:
+contact
+experience
+skills
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+
+iCIMS
+iCIMS, Inc.
+
+39
+May Be Filtered
+Poor
+Formatting
+95.2
+Keywords
+100
+Sections
+33
+Experience
+0
+Education
+80
+Hide details
+iCIMS may filter this resume. Weakest areas: Experience (0), Sections (33).
+
+Formatting issues
+images or graphics detected
+Sections
+Present:
+education
+Missing:
+contact
+experience
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+
+Greenhouse
+Greenhouse Software
+
+33
+May Be Filtered
+Poor
+Formatting
+96.8
+Keywords
+100
+Sections
+50
+Experience
+0
+Education
+80
+Hide details
+Greenhouse may filter this resume. Weakest areas: Experience (0), Sections (50).
+
+Formatting issues
+images or graphics detected
+Sections
+Present:
+education
+Missing:
+experience
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+
+Lever
+Lever (Employ Inc.)
+
+23
+May Be Filtered
+Poor
+Formatting
+97.2
+Keywords
+100
+Sections
+0
+Experience
+0
+Education
+80
+Hide details
+Lever may filter this resume. Weakest areas: Sections (0), Experience (0).
+
+Formatting issues
+images or graphics detected
+Sections
+Missing:
+experience
+Experience
+no experience bullets found
+Education
+degree detected: ma
+field of study detected
+Priority Focus Areas
+Filtered out by:
+Workday
+Taleo
+SuccessFactors
+iCIMS
+Greenhouse
+Lever
+
+1
+Experience Quality
+no experience bullets found
+0
+
+2
+Section Structure
+Missing: contact
+Missing: experience
+Missing: skills
+26
+Lever: 0
+
+3
+Education
+80
+
+4
+Formatting & Parsing
+95
+
+5
+Keyword Coverage
+100
+Resume Overview
+287
+Words
+1
+Page
+5
+Sections
+0
+Skills Found
+0
+Positions
+1
+Education
+Detected Sections
+unknown
+summary
+education
+projects
+languages
+Contact Info
+rangianji2503@gmail.com
+8708480063
+linkedin.com/in/anjali-rangi-3248b3422
+github.com/anjalirangi002
+Multi-Column Layout
+Tables Detected
+Images/Graphics
+Optimization Suggestions
+Actionable recommendations based on analysis across all 6 ATS platforms. Click to expand.
+
+1
+add missing sections: contact, experience, skills. Workday requires these for proper parsing.
+critical
+2
+add detailed experience bullets with measurable achievements
+high
+3
+add missing sections: contact, experience, skills. Taleo requires these for proper parsing.
+medium
+4
+missing standard sections: contact, experience, skills. Taleo requires clearly labeled sections.
+medium
+5
+add missing sections: contact, experience, skills. SuccessFactors requires these for proper parsing.

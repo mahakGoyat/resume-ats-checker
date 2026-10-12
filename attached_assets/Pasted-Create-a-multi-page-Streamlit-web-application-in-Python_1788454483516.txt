@@ -1,0 +1,29 @@
+Create a multi-page Streamlit web application in Python with a premium sidebar/navbar navigation. Organize the project into exactly 5 sequential pages using the following file structure and workflow:
+
+1. app.py (Home Page): 
+- The main landing page titled "Free Resume ATS Score Checker".
+- Features a PDF resume uploader and a Job Description text area.
+- Calculates an initial ATS match score.
+- Implements a prominent navigation button at the bottom: "Fix & Improve My Resume Now 🚀" which automatically passes the uploaded data and opens the 'magic_fixer.py' page.
+
+2. magic_fixer.py (AI Magic Fixer Page):
+- Titled "AI Resume Magic Fixer".
+- Retrieves the user's uploaded resume and JD from the session state.
+- Automatically enhances the resume text by logically embedding missing keywords from the JD.
+- Displays 3 distinct layout previews (Modern Minimalist, Executive Corporate, and Tech Creative) containing the optimized data.
+- Shows the new boosted "Expected ATS Score (85%-98%)" at the bottom of each template.
+- Includes a 1-click download button for each format.
+
+3. blog.py (Blog Page):
+- Titled "Career & Resume Insights Blog".
+- A beautifully styled grid layout with 3 dummy SEO-friendly articles about ATS optimization, resume writing tips, and career growth.
+
+4. about.py (About Us Page):
+- Titled "About Our Free AI Tool".
+- Contains a clean, professional section explaining the mission of this tool (helping job seekers secure interviews for free).
+
+5. contact_privacy.py (Contact & Privacy Policy Page):
+- Titled "Contact Us & Data Privacy".
+- Includes a minimalist feedback/contact form and a clear Privacy Policy section explicitly stating that user documents are processed on the fly and never stored on servers to ensure 100% data privacy.
+
+Ensure all pages share a consistent CSS theme (modern dark/light accent typography), have short instructions, require no login, and utilize Streamlit's st.navigation or native multipage structure so they switch smoothly in this exact order.
