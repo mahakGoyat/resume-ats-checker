@@ -1,7 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
-import pdfWorkerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url';
 import { createWorker } from 'tesseract.js';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -90,11 +88,6 @@ type AiAnalysis = {
 
 const queryClient = new QueryClient();
 
-// Bundle the worker with Vite so it always matches the installed pdf.js version.
-// Without this, pdf.js falls back to a missing worker URL and logs
-// "No GlobalWorkerOptions.workerSrc specified." in the browser.
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
-
 const MIN_EXTRACTED_TEXT_LENGTH = 80;
 const NO_READABLE_TEXT_MESSAGE =
   'We could not find readable text in this file. Try a clearer image or export the resume as PDF, DOCX, or plain text.';
@@ -173,7 +166,10 @@ const content = await page.getTextContent();
 async function extractResumeText(file: File, onProgress?: (message: string) => void) {
   const buffer = await file.arrayBuffer();
   if (file.name.toLowerCase().endsWith('.pdf')) {
-    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+    const workerMod = await import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url');
+    pdfjs.GlobalWorkerOptions.workerSrc = workerMod.default;
+    const pdf = await pdfjs.getDocument({ data: buffer }).promise;
     const pages: string[] = [];
     for (let index = 1; index <= pdf.numPages; index += 1) {
       onProgress?.(`Reading page ${index} of ${pdf.numPages}`);
@@ -1137,7 +1133,10 @@ async function renderFirstPageAsImage(file: File): Promise<{ base64: string; mim
   try {
     if (name.endsWith('.pdf') || file.type === 'application/pdf') {
       const buffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+      const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+      const workerMod = await import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url');
+      pdfjs.GlobalWorkerOptions.workerSrc = workerMod.default;
+      const pdf = await pdfjs.getDocument({ data: buffer }).promise;
       const page = await pdf.getPage(1);
       const viewport = page.getViewport({ scale: 2 });
       const canvas = document.createElement('canvas');

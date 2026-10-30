@@ -1,8 +1,3 @@
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
-import pdfWorkerUrl from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?url';
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
-
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -13,7 +8,11 @@ function fileToDataUrl(file: File): Promise<string> {
 }
 
 function renderPdfRegion(buffer: ArrayBuffer): Promise<string> {
-  return pdfjsLib.getDocument({ data: buffer }).promise.then(async (pdf) => {
+  return (async () => {
+    const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+    const workerMod = await import('pdfjs-dist/legacy/build/pdf.worker.min.mjs?url');
+    pdfjs.GlobalWorkerOptions.workerSrc = workerMod.default;
+    const pdf = await pdfjs.getDocument({ data: buffer }).promise;
     const page = await pdf.getPage(1);
     const scale = 1.5;
     const viewport = page.getViewport({ scale });
@@ -33,7 +32,7 @@ function renderPdfRegion(buffer: ArrayBuffer): Promise<string> {
     if (!cropCtx) throw new Error('no crop context');
     cropCtx.drawImage(canvas, 0, 0, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
     return crop.toDataURL('image/jpeg', 0.82);
-  });
+  })();
 }
 
 export async function extractResumePhoto(file: File | null): Promise<string | null> {
