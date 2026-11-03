@@ -493,23 +493,48 @@ export function buildImprovedResumeDoc(improved: ImprovedResume): ResumeDocBlock
   ].filter((part): part is string => Boolean(part)));
   if (contactParts.length) blocks.push({ kind: 'contact', text: contactParts.join(' | ') });
 
+  // Safety net: never render a duplicate section heading or duplicate item text,
+  // even if the improved data structure somehow contains one.
+  const seenSectionTitles = new Set<string>();
+  const seenItemTexts = new Set<string>();
+
   for (const section of improved.sections) {
     if (!section.items.length) continue;
     const heading = section.title.trim() || humanSectionTitle(section.type);
+    const headingKey = heading.toLowerCase();
+    if (headingKey && seenSectionTitles.has(headingKey)) continue;
+    seenSectionTitles.add(headingKey);
+
     const sectionKind = sectionTypeToKind(section.type);
     blocks.push({ kind: 'section', title: heading, sectionKind });
 
     for (const [index, item] of section.items.entries()) {
       if (item.type === 'entry') {
-        blocks.push(...buildEntryBlocks(item, sectionKind, section.items[index + 1]));
+        const entryBlocks = buildEntryBlocks(item, sectionKind, section.items[index + 1]);
+        for (const block of entryBlocks) {
+          if (block.kind === 'item') {
+            const key = `${block.text ?? ''}|${block.bold ? 'bold' : ''}|${block.bullet ? 'bullet' : ''}|${block.tech ?? ''}`.toLowerCase();
+            if (key && seenItemTexts.has(key)) continue;
+            seenItemTexts.add(key);
+          }
+          blocks.push(block);
+        }
         continue;
       }
       if (item.type === 'skills-row') {
-        blocks.push({ kind: 'skills', label: item.label?.trim() ?? '', values: item.values ?? [] });
+        const values = unique(item.values ?? []);
+        if (!values.length) continue;
+        const key = `skills|${item.label?.trim() ?? ''}|${values.join(',')}`;
+        if (key && seenItemTexts.has(key)) continue;
+        seenItemTexts.add(key);
+        blocks.push({ kind: 'skills', label: item.label?.trim() ?? '', values });
         continue;
       }
       if (item.type === 'edu') {
         const split = splitEntryLine(item.text ?? '');
+        const key = `edu|${split.text}|${split.right ?? ''}|${split.tech ?? ''}`.toLowerCase();
+        if (key && seenItemTexts.has(key)) continue;
+        seenItemTexts.add(key);
         blocks.push({
           kind: 'item',
           text: split.text,
@@ -521,7 +546,11 @@ export function buildImprovedResumeDoc(improved: ImprovedResume): ResumeDocBlock
         continue;
       }
       const text = item.text?.trim();
-      if (text) blocks.push({ kind: 'item', text });
+      if (!text) continue;
+      const key = `text|${text.toLowerCase()}`;
+      if (key && seenItemTexts.has(key)) continue;
+      seenItemTexts.add(key);
+      blocks.push({ kind: 'item', text });
     }
   }
   return blocks;

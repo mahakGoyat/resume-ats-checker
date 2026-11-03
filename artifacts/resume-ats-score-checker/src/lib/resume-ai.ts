@@ -376,7 +376,31 @@ export function verifyImprovedResume(originalText: string, improved: ImprovedRes
         if (seen.has(key)) issues.push(`Duplicate line in improved resume: ${bullet.trim()}`);
         seen.add(key);
       }
+      continue;
     }
+    let itemText = '';
+    if (item.type === 'skills-row') {
+      itemText = `${item.label ?? ''} | ${(item.values ?? []).join(', ')}`;
+    } else if (item.type === 'edu') {
+      itemText = `${item.text ?? ''} | ${item.right ?? ''} | ${item.tech ?? ''}`;
+    } else {
+      itemText = item.text ?? '';
+    }
+    const normalized = itemText.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (normalized) {
+      if (seen.has(normalized)) issues.push(`Duplicate line in improved resume: ${itemText}`);
+      seen.add(normalized);
+    }
+  }
+
+  // Duplicate section titles
+  const seenSectionTitles = new Set<string>();
+  for (const section of improved.sections) {
+    const key = section.title.trim().toLowerCase();
+    if (key && seenSectionTitles.has(key)) {
+      issues.push(`Duplicate section title in improved resume: ${section.title}`);
+    }
+    seenSectionTitles.add(key);
   }
 
   return issues;
@@ -567,6 +591,63 @@ function splitTrailingField(line: string): { left: string; right?: string } {
 }
 
 /**
+ * Removes duplicate sections, duplicate items within sections, duplicate
+ * bullets within entries, and duplicate skill values — so the AI can never
+ * produce repeated words or a garbled structure in the improved resume.
+ */
+export function deduplicateImprovedResume(improved: ImprovedResume): ImprovedResume {
+  const sections: ImprovedSection[] = [];
+  const seenTitles = new Set<string>();
+  const seenTexts = new Set<string>();
+
+  for (const section of improved.sections) {
+    const titleKey = section.title.trim().toLowerCase();
+    if (titleKey && seenTitles.has(titleKey)) continue;
+    seenTitles.add(titleKey);
+
+    const items: ImprovedItem[] = [];
+    for (const item of section.items) {
+      let itemText = '';
+      let uniqueBullets: string[] | undefined;
+      let uniqueValues: string[] | undefined;
+
+      if (item.type === 'entry') {
+        const seenBullets = new Set<string>();
+        uniqueBullets = (item.bullets ?? []).filter((b) => {
+          const key = b.trim().toLowerCase();
+          if (seenBullets.has(key)) return false;
+          seenBullets.add(key);
+          return true;
+        });
+        itemText = `${item.title ?? ''} | ${item.subtitle ?? ''} | ${item.right ?? ''} | ${item.tech ?? ''} | ${uniqueBullets.join(' ')}`;
+      } else if (item.type === 'skills-row') {
+        uniqueValues = unique(item.values ?? []);
+        itemText = `${item.label ?? ''} | ${uniqueValues.join(', ')}`;
+      } else if (item.type === 'edu') {
+        itemText = `${item.text ?? ''} | ${item.right ?? ''} | ${item.tech ?? ''}`;
+      } else {
+        itemText = item.text ?? '';
+      }
+
+      const normalized = itemText.replace(/\s+/g, ' ').trim().toLowerCase();
+      if (normalized && seenTexts.has(normalized)) continue;
+      seenTexts.add(normalized);
+
+      const dedupedItem: ImprovedItem = { ...item };
+      if (uniqueBullets) dedupedItem.bullets = uniqueBullets;
+      if (uniqueValues) dedupedItem.values = uniqueValues;
+      items.push(dedupedItem);
+    }
+
+    if (items.length > 0) {
+      sections.push({ ...section, items });
+    }
+  }
+
+  return { ...improved, sections };
+}
+
+/**
  * Repairs an improved resume so it never loses data: contact fields come from
  * the original verbatim, and any body content that fails the guard is replaced
  * by the deterministic structure built from the original. The AI wording is kept
@@ -575,7 +656,8 @@ function splitTrailingField(line: string): { left: string; right?: string } {
 export function repairImprovedResume(originalText: string, improved: ImprovedResume): { result: ImprovedResume; notes: string[] } {
   const notes: string[] = [];
   const parsed = parseResumeSections(sanitizeResumeText(originalText));
-  const result = { ...improved, header: { ...improved.header } };
+  const deduped = deduplicateImprovedResume(improved);
+  const result = { ...deduped, header: { ...deduped.header } };
 
   // Header must always come from the original, verbatim.
   const fromOriginal = improvedFromParsed(parsed);
