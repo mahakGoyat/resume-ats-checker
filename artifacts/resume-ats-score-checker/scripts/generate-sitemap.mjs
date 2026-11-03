@@ -76,7 +76,7 @@ async function fetchPublishedBlogSlugs() {
   if (!supabaseUrl || !anonKey || !SITE_URL) return [];
   try {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 8000);
+    const timer = setTimeout(() => controller.abort(), 15000);
     const response = await fetch(
       `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/blog_posts?select=slug&published=eq.true&order=created_at.desc`,
       {
@@ -91,7 +91,7 @@ async function fetchPublishedBlogSlugs() {
     console.log(`[sitemap] Fetched ${slugs.length} published blog slugs.`);
     return slugs;
   } catch (error) {
-    console.warn(`[sitemap] Could not fetch blog slugs (${error instanceof Error ? error.message : error}). Using static routes only.`);
+    console.warn(`[sitemap] Could not fetch blog slugs (${error instanceof Error ? error.message : error}). Build will not fail; using static routes only.`);
     return [];
   }
 }

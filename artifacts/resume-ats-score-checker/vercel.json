@@ -1,6 +1,20 @@
 {
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://resume-ats-checker-ab4l.onrender.com/api/:path*" },
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/blog", "destination": "/blog/index.html" },
+    { "source": "/blog/:slug", "destination": "/blog/:slug/index.html" },
+    { "source": "/resume-help", "destination": "/resume-help/index.html" },
+    { "source": "/resume-help/:slug*", "destination": "/resume-help/:slug*/index.html" },
+    { "source": "/ats-resume-checker-freshers", "destination": "/ats-resume-checker-freshers/index.html" },
+    { "source": "/software-engineer-resume-scanner", "destination": "/software-engineer-resume-scanner/index.html" },
+    { "source": "/data-analyst-resume-review", "destination": "/data-analyst-resume-review/index.html" },
+    { "source": "/digital-marketing-resume-optimizer", "destination": "/digital-marketing-resume-optimizer/index.html" },
+    { "source": "/canva-resume-ats-friendly", "destination": "/canva-resume-ats-friendly/index.html" },
+    { "source": "/best-file-format-for-ats", "destination": "/best-file-format-for-ats/index.html" },
+    { "source": "/how-to-optimize-resume-keywords", "destination": "/how-to-optimize-resume-keywords/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env PORT=5173 BASE_PATH=/ vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/generate-sitemap.mjs && cross-env PORT=5173 BASE_PATH=/ vite build --config vite.config.ts",
+    "build": "node scripts/generate-sitemap.mjs && cross-env PORT=5173 BASE_PATH=/ vite build --config vite.config.ts && node scripts/pre-render.mjs",
     "serve": "cross-env PORT=5173 BASE_PATH=/ vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
